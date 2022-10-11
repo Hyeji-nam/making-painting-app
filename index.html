@@ -10,11 +10,9 @@
 </head>
 
 <body>
-  <!-- canvas API -->
-  <canvas></canvas>
-  <input id="line-width" type="range" min="1" max="10" value="5" step="0.5" />
-  <input type="color" id="color">
-  <div>
+
+  <div class="color-options">
+    <input type="color" id="color">
     <div class="color-option" style="background-color: #ff7675;" data-color="#ff7675"></div>
     <div class="color-option" style="background-color: #0984e3;" data-color="#0984e3"></div>
     <div class="color-option" style="background-color: #d63031;" data-color="#d63031"></div>
@@ -28,13 +26,23 @@
     <div class="color-option" style="background-color: #fd79a8;" data-color="#fd79a8"></div>
     <div class="color-option" style="background-color: #e84393;" data-color="#e84393"></div>
   </div>
-  <button id="mode-btn">Fill</button>
-  <button id="destroy-btn">Destroy</button>
-  <button id="eraser-btn">Erase</button>
-  <!-- accept="image/*" (포맷 관계없이)이미지만 추가할 수 있음-->
-  <input type="file" accept="image/*" id="file"/>
-  <button id="save">Save image</button>
-  <input type="text" placeholder="Write and then double click" id="text">
+  <!-- canvas API -->
+  <canvas></canvas>
+  <div class="btns">
+
+    <input id="line-width" type="range" min="1" max="10" value="5" step="0.5" />
+    
+    <button id="mode-btn">Fill</button>
+    <button id="destroy-btn">Destroy</button>
+    <button id="eraser-btn">Erase</button>
+    <!-- accept="image/*" (포맷 관계없이)이미지만 추가할 수 있음-->
+    <label for="file">
+      Add Photo
+      <input type="file" accept="image/*" id="file" />
+    </label>
+    <input type="text" placeholder="Add text here...:)" id="text">
+    <button id="save">Save image</button>
+  </div>
   <script src="app.js"></script>
 </body>
 
