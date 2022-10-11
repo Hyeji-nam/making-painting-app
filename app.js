@@ -1,3 +1,5 @@
+const saveBtn = document.getElementById("save")
+const textInput = document.getElementById("text")
 const fileInput = document.getElementById("file")
 const modeBtn = document.getElementById("mode-btn")
 const destroyBtn = document.getElementById("destroy-btn")
@@ -15,6 +17,7 @@ const CANVAS_HEIGHT = 800;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 ctx.lineWidth = lineWidth.value;
+ctx.lineCap = "round"
 let isPainting = false; 
 let isFilling = false;
 
@@ -88,10 +91,15 @@ function onEraserClick() {
 
 function onFileChange (event) {
   // file 가져오기
+  // input tag에 multiple 속성을 사용하면 파일을 여러 개 불러 올 수 있음
+  // 여기서는 파일 1개만 허용되기 때문에 file 배열의 첫 번째만 가져옴
   const file = event.target.files[0];
 
   // 해당 file을 가리키는 url 얻기
+  // 유저가 파일을 업로드한 브라우저 안에서만 사용 가능한 url
   const url = URL.createObjectURL(file);
+
+  // = document.createElement("img")
   const image = new Image();
   image.src = url;
   image.onload = function () {
@@ -101,6 +109,31 @@ function onFileChange (event) {
   }
 }
 
+function onDoubleClick (event) {
+  const text = textInput.value;
+  if (text !== "") {
+  // save(): ctx의 현재 상태를 저장
+  ctx.save();
+  ctx.lineWidth = 1;
+  ctx.font = "68px sans-serif"
+  ctx.fillText(text, event.offsetX, event.offsetY);
+  // restore(): 기존으로 돌아감
+  ctx.restore();
+  }
+}
+
+function onSaveClick () {
+  const url = canvas.toDataURL();
+  const a = document.createElement("a");
+  a.href = url;
+  // download : "파일명"으로 저장
+  a.download = "myDrawing.png";
+  // 다운로드 창을 띄워줌
+  a.click();
+}
+
+// dbclick : mouseup, mousedown이 매우 빠르게 일어나는 것
+canvas.addEventListener("dblclick", onDoubleClick)
 canvas.addEventListener("mousemove", onMove); // = convas.onmousemove = onMove
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
@@ -116,6 +149,7 @@ modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
 
 
 
